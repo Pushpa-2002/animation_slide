@@ -1,0 +1,18 @@
+@keyframes slideUpFadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-slide-up {
+  animation-name: slideUpFadeIn;
+  animation-fill-mode: forwards;
+  animation-timing-function: ease-out;
+  animation-duration: 1s;
+  opacity: 0; /* start hidden */
+}

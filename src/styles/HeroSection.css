@@ -1,0 +1,28 @@
+.hero_section{
+    background: url(/images/home_bg_01_blue.jpg)  ;
+    background-position: 50% 99.9%;
+        background-size: 100% auto;
+}
+
+.hero_section {
+  opacity: 0;
+  transform: translateY(1000px);
+  transition: all 2s ease-out;
+}
+
+/* After load */
+.hero_section.animate-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reviews {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.8s ease-out 0.3s;
+}
+
+.hero_section.animate-in + .reviews {
+  opacity: 1;
+  transform: translateY(0);
+}
