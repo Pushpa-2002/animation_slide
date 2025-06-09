@@ -48,17 +48,17 @@ export default function Home() {
 
       <HeroSection ref={ref} loaded={!loading} />
 
-      <div section id="features" ref={featuresRef}>
+      <section id="features" ref={featuresRef}>
         {showFeatures && <Features />}
-      </div>
+      </section>
 
-      <div section id="screenshots" ref={screenshotsRef}>
+      <section id="screenshots" ref={screenshotsRef}>
         {showScreenshots && <Screenshots />}
-      </div>
+      </section>
 
-      <div section id="pricing" ref={pricingRef}>
+      <section id="pricing" ref={pricingRef}>
         {showPricing && <Pricing />}
-      </div>
+      </section>
     </>
   );
 }
