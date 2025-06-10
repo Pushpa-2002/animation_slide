@@ -8,7 +8,9 @@ import Link from "next/link";
 
 export default function Header({ isVisible }) {
   return (
-    <div className={clsx("Navigation transition-header", { show: isVisible })}>
+    <div   className={clsx("Navigation", {
+        visible: isVisible,
+      })}>
       <nav className="flex justify-around items-center p-6 bg-white text-black shadow-md fixed w-full top-0 left-0 z-50">
         <div>
           <Image

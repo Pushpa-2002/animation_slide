@@ -14,13 +14,20 @@ const Pricing = dynamic(() => import('@/components/pricing'), { ssr: false });
 
 export default function Home() {
   const [loading, setLoading] = useState(true);
-  const [ref, inView] = useInView({ threshold: 0.1 });
-  const [showFeatures, setShowFeatures] = useState(false);
-  const [showScreenshots, setShowScreenshots] = useState(false);
-  const [showPricing, setShowPricing] = useState(false);
 
-  // Trigger header visibility
-  const showHeader = !loading && !inView;
+  const [scrollEndRef, scrollPassed] = useInView({
+    threshold: 0.1,
+    triggerOnce: false, // 👈 important for up/down toggle
+  });
+
+  const [showHeader, setShowHeader] = useState(false);
+
+  // Update header visibility dynamically
+  useEffect(() => {
+    if (!loading) {
+      setShowHeader(scrollPassed); // 👈 toggles with scroll
+    }
+  }, [scrollPassed, loading]);
 
   // Simulate loading
   useEffect(() => {
@@ -28,10 +35,14 @@ export default function Home() {
     return () => clearTimeout(timer);
   }, []);
 
-  // Observer refs
+  // Trigger other section loading
   const [featuresRef, featuresInView] = useInView({ triggerOnce: true, threshold: 0.2 });
   const [screenshotsRef, screenshotsInView] = useInView({ triggerOnce: true, threshold: 0.2 });
   const [pricingRef, pricingInView] = useInView({ triggerOnce: true, threshold: 0.2 });
+
+  const [showFeatures, setShowFeatures] = useState(false);
+  const [showScreenshots, setShowScreenshots] = useState(false);
+  const [showPricing, setShowPricing] = useState(false);
 
   useEffect(() => {
     if (featuresInView) setShowFeatures(true);
@@ -39,14 +50,14 @@ export default function Home() {
     if (pricingInView) setShowPricing(true);
   }, [featuresInView, screenshotsInView, pricingInView]);
 
-
   if (loading) return <Preloader />;
 
   return (
     <>
       {showHeader && <Header isVisible />}
 
-      <HeroSection ref={ref} loaded={!loading} />
+      {/* Hero Section passes scrollEndRef */}
+      <HeroSection scrollEndRef={scrollEndRef} loaded={!loading} />
 
       <section id="features" ref={featuresRef}>
         {showFeatures && <Features />}
