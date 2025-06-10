@@ -1,41 +1,36 @@
 'use client';
 
-import dynamic from 'next/dynamic';
-import { useInView } from 'react-intersection-observer';
-import { useEffect, useState } from 'react';
-import Header from '@/components/header';
-import HeroSection from '@/components/HeroSection';
-import Preloader from '@/components/preloader';
+import dynamic from "next/dynamic";
+import { useInView } from "react-intersection-observer";
+import { useEffect, useState } from "react";
+import Header from "@/components/header";
+import HeroSection from "@/components/HeroSection";
+import Preloader from "@/components/preloader";
 
-// Lazy load components
-const Features = dynamic(() => import('@/components/features'), { ssr: false });
-const Screenshots = dynamic(() => import('@/components/screenshots'), { ssr: false });
-const Pricing = dynamic(() => import('@/components/pricing'), { ssr: false });
+const Features = dynamic(() => import("@/components/features"), { ssr: false });
+const Screenshots = dynamic(() => import("@/components/screenshots"), { ssr: false });
+const Pricing = dynamic(() => import("@/components/pricing"), { ssr: false });
 
 export default function Home() {
   const [loading, setLoading] = useState(true);
 
-  const [scrollEndRef, scrollPassed] = useInView({
-    threshold: 0.1,
-    triggerOnce: false, // 👈 important for up/down toggle
+  // Detect when scroll passes the bottom of hero section (scrollEndRef)
+ const [scrollEndRef, inView] = useInView({
+    threshold: 0,
+    rootMargin: "-1px 0px 0px 0px", // optional tweak for exact trigger
   });
 
-  const [showHeader, setShowHeader] = useState(false);
+ const showHeader = !inView;
 
-  // Update header visibility dynamically
-  useEffect(() => {
-    if (!loading) {
-      setShowHeader(scrollPassed); // 👈 toggles with scroll
-    }
-  }, [scrollPassed, loading]);
 
-  // Simulate loading
+
+  // Simulate loading screen for 1 second
   useEffect(() => {
     const timer = setTimeout(() => setLoading(false), 1000);
     return () => clearTimeout(timer);
   }, []);
 
-  // Trigger other section loading
+  // Section in-view detection for lazy loading
   const [featuresRef, featuresInView] = useInView({ triggerOnce: true, threshold: 0.2 });
   const [screenshotsRef, screenshotsInView] = useInView({ triggerOnce: true, threshold: 0.2 });
   const [pricingRef, pricingInView] = useInView({ triggerOnce: true, threshold: 0.2 });
@@ -46,9 +41,15 @@ export default function Home() {
 
   useEffect(() => {
     if (featuresInView) setShowFeatures(true);
+  }, [featuresInView]);
+
+  useEffect(() => {
     if (screenshotsInView) setShowScreenshots(true);
+  }, [screenshotsInView]);
+
+  useEffect(() => {
     if (pricingInView) setShowPricing(true);
-  }, [featuresInView, screenshotsInView, pricingInView]);
+  }, [pricingInView]);
 
   if (loading) return <Preloader />;
 
@@ -56,7 +57,7 @@ export default function Home() {
     <>
       {showHeader && <Header isVisible />}
 
-      {/* Hero Section passes scrollEndRef */}
+      {/* Pass scrollEndRef to HeroSection to mark bottom */}
       <HeroSection scrollEndRef={scrollEndRef} loaded={!loading} />
 
       <section id="features" ref={featuresRef}>

@@ -2,7 +2,7 @@ import React, { forwardRef, useEffect, useState } from "react";
 import "../styles/HeroSection.css";
 import Image from "next/image";
 
-const HeroSection = forwardRef(({ loaded ,scrollEndRef }, ref) => {
+const HeroSection = forwardRef(({ loaded, scrollEndRef }, ref) => {
   const [animate, setAnimate] = useState(false);
 
   useEffect(() => {
@@ -15,32 +15,34 @@ const HeroSection = forwardRef(({ loaded ,scrollEndRef }, ref) => {
   }, [loaded]);
 
   return (
-    <>
+    <section 
+      ref={ref} 
+      className="hero_full_section"
+    >
+      {/* Hero Content */}
       <div
-        ref={ref}
         className={`hero_section h-[100vh] w-full ${
           animate ? "animate-in" : ""
         }`}
       >
-         <div className="hero_content flex flex-col justify-start items-center pt-10">
+        <div className="hero_content flex flex-col justify-start items-center">
           <Image
             src="/images/logo_home@2x.png"
             alt="Logo"
-            width={200}
+            width={100}
             height={50}
-            className="logo"
+            className="logo pt-10"
           />
 
-          {/* You can add more hero section content here */}
           <div className="mt-8 text-center text-white">
             <h1 className="text-4xl font-bold">Welcome to Our App</h1>
             <p className="mt-4 text-lg">Experience the best mobile solution</p>
             {/* Optional Button */}
-            {/* <button className="mt-6 px-6 py-3 bg-blue-600 text-white rounded-full">Get Started</button> */}
           </div>
         </div>
-
       </div>
+          <div ref={scrollEndRef} style={{  height: "1px" }}></div>
+      {/* Reviews */}
       <div className={`reviews px-4 bg-gray-100 ${animate ? "reviews-in" : ""}`}>
         <div className="grid grid-cols-3 sm:grid-cols-6 gap-4 items-center justify-center">
           <img src="/images/logo1@2x.png" alt="Logo 1" className="mx-auto" />
@@ -50,9 +52,9 @@ const HeroSection = forwardRef(({ loaded ,scrollEndRef }, ref) => {
           <img src="/images/logo5@2x.png" alt="Logo 5" className="mx-auto" />
           <img src="/images/logo6@2x.png" alt="Logo 6" className="mx-auto" />
         </div>
+      
       </div>
-      <div ref={scrollEndRef} style={{ height: '1px' }}></div>
-    </>
+    </section>
   );
 });
 

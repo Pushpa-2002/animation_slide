@@ -1,4 +1,5 @@
 .hero_section{
+
     background: url(/images/home_bg_01_blue.jpg)  ;
     background-position: 50% 99.9%;
         background-size: 100% auto;
@@ -8,8 +9,11 @@
   transition: all 2s ease-out;
   
   display: flex;
+    flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
+ height: 100vh;
+    pointer-events: auto;
 }
 .hero_content {
   text-align: center;
@@ -25,6 +29,7 @@
 .hero_section.animate-in {
   opacity: 1;
   transform: translateY(0);
+    pointer-events: auto;
 }
 
 .reviews {
@@ -38,7 +43,11 @@
   transform: translateY(0);
 }
 
-
+.hero_full_section {
+  /* No special styles needed unless you want */
+  /* For example, you could set width: 100% if needed */
+  width: 100%;
+}
 .hero_section.animate-in{
   opacity: 1 !important; 
   transform: translateY(0);
