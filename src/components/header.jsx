@@ -31,7 +31,7 @@ export default function Header({ isVisible }) {
             <a href="#pricing">Pricing</a>
           </li>
           <li>
-            <a href="#contact">Contact</a>
+            <a href="#contacts">Contact</a>
           </li>
         </ul>
       </nav>

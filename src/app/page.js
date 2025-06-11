@@ -2,7 +2,7 @@
 
 import dynamic from "next/dynamic";
 import { useInView } from "react-intersection-observer";
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import Header from "@/components/header";
 import HeroSection from "@/components/HeroSection";
 import Preloader from "@/components/preloader";
@@ -10,6 +10,7 @@ import Preloader from "@/components/preloader";
 const Features = dynamic(() => import("@/components/features"), { ssr: false });
 const Screenshots = dynamic(() => import("@/components/screenshots"), { ssr: false });
 const Pricing = dynamic(() => import("@/components/pricing"), { ssr: false });
+const Contacts = dynamic(()=> import("@/components/contacts"), { ssr: false });
 
 export default function Home() {
   const [loading, setLoading] = useState(true);
@@ -34,10 +35,12 @@ export default function Home() {
   const [featuresRef, featuresInView] = useInView({ triggerOnce: true, threshold: 0.2 });
   const [screenshotsRef, screenshotsInView] = useInView({ triggerOnce: true, threshold: 0.2 });
   const [pricingRef, pricingInView] = useInView({ triggerOnce: true, threshold: 0.2 });
+  const [contactsRef, contactsInView] = useInView({ triggerOnce: true, threshold: 0.2 });
 
   const [showFeatures, setShowFeatures] = useState(false);
   const [showScreenshots, setShowScreenshots] = useState(false);
   const [showPricing, setShowPricing] = useState(false);
+  const [showContacts, setShowContacts] = useState(false);
 
   useEffect(() => {
     if (featuresInView) setShowFeatures(true);
@@ -50,6 +53,10 @@ export default function Home() {
   useEffect(() => {
     if (pricingInView) setShowPricing(true);
   }, [pricingInView]);
+
+  useEffect(() => {
+    if (contactsInView) setShowContacts(true);
+  }, [contactsInView]);
 
   if (loading) return <Preloader />;
 
@@ -71,6 +78,11 @@ export default function Home() {
       <section id="pricing" ref={pricingRef}>
         {showPricing && <Pricing />}
       </section>
+
+     <section id="contacts" ref={contactsRef}>
+        {showContacts && <Contacts />}
+      </section>
+      
     </>
   );
 }
