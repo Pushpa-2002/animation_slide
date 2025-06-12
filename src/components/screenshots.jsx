@@ -18,7 +18,9 @@ export default function Screenshots() {
             <div className={`screenshot-image ${inView ? 'fade-up' : ''}`}>
               <Image src="/images/1@2x.jpg" alt="image" width={300} height={300} />
             </div>
-            <div className={`screenshot-image ${inView ? 'fade-up' : ''}`}>
+            <div className={`screenshot-image 
+            
+            ${inView ? 'fade-up' : ''}`}>
               <Image src="/images/6@2x.jpg" alt="image" width={300} height={300} />
             </div>
             <div className={`screenshot-image ${inView ? 'fade-up' : ''}`}>
